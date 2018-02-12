@@ -19,6 +19,7 @@ import logging
 import subprocess
 import paramiko
 import ConfigParser
+import shutil
 
 
 def ssh_login(in_host, in_user, in_keyfile):
@@ -65,6 +66,7 @@ def main():
         DOWNLOAD_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'DOWNLOAD_DIR'))
         STAGING_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'STAGING_DIR'))
         ARCHIVE_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'ARCHIVE_DIR'))
+        STAGING_GA_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'STAGING_GA_DIR'))
         LOG_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'LOG_DIR'))
         SCRIPTS_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'SCRIPTS_DIR'))
         QUARANTINE_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'QUARANTINE_DIR'))
@@ -177,8 +179,10 @@ def main():
                 for f in os.listdir(STAGING_DIR):
                         lf = os.path.join(DOWNLOAD_DIR, f)
                         sf = os.path.join(STAGING_DIR, f)
+                        ga_file = os.path.join(STAGING_GA_DIR, f)
                         logger.debug("move %s from staging to download %s", sf, lf)
                         os.rename(sf, lf)
+                        shutil.copy2(lf, ga_file)
                         downloadcount += 1
 
         logger.info("Downloaded %s files", downloadcount)
