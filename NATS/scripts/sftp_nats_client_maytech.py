@@ -62,7 +62,7 @@ def main():
         config = ConfigParser.ConfigParser()
         config.read(CONFIG_FILE)
 
-        SSH_LANDING_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'SSH_LANDING_DIR'))
+        SSH_LANDING_DIR = re.sub("/*$", "/", os.environ['SSH_LANDING_DIR'])
         DOWNLOAD_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'DOWNLOAD_DIR'))
         STAGING_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'STAGING_DIR'))
         ARCHIVE_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'ARCHIVE_DIR'))
@@ -70,9 +70,9 @@ def main():
         LOG_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'LOG_DIR'))
         SCRIPTS_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'SCRIPTS_DIR'))
         QUARANTINE_DIR = re.sub("/*$", "/", config.get(CUSTOM_SECTION, 'QUARANTINE_DIR'))
-        SSH_REMOTE_HOST = config.get(CUSTOM_SECTION, 'SSH_REMOTE_HOST')
-        SSH_REMOTE_USER = config.get(CUSTOM_SECTION, 'SSH_REMOTE_USER')
-        SSH_PRIVATE_KEY = config.get(CUSTOM_SECTION, 'SSH_PRIVATE_KEY')
+        SSH_REMOTE_HOST = os.environ['SSH_REMOTE_HOST']
+        SSH_REMOTE_USER = os.environ['SSH_REMOTE_USER']
+        SSH_PRIVATE_KEY = os.environ['SSH_PRIVATE_KEY']
         NATS_FILE_REGEX = config.get(CUSTOM_SECTION, 'NATS_FILE_REGEX')
         NATS_DONE_FILE_REGEX = config.get(CUSTOM_SECTION, 'NATS_DONE_FILE_REGEX')
         VSCANEXE = config.get(CUSTOM_SECTION, 'VSCANEXE')
